@@ -1,0 +1,50 @@
+﻿@model IEnumerable<EbookSTR.Client>
+
+    @{
+        ViewData["Title"] = "Клієнти";
+    }
+
+    <h1>Клієнти</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Surname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <form method="get" asp-controller="Purchases" asp-action="Index" asp-route-id="@item.Id">
+                            <input type="submit" class="btn btn-success" value="Список покупок" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <form method="get" asp-controller="Home" asp-action="Index">
+        <input type="submit" class="btn btn-primary" value="На головну" />
+    </form>
+

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<EbookSTR.Purchase>
+
+    @{
+        ViewData["Title"] = "Покупки";
+    }
+
+    @if (ViewBag.ClientId == 0)
+    {
+        <h1>Покупки</h1>
+    }
+    else
+    {
+        <h1>Покупки @ViewBag.Client</h1>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                @if (ViewBag.ClientId == 0)
+                {
+                    <th>
+                        Email покупця
+                    </th>
+                }
+                <th>
+                    Назва книги
+                </th>
+                <th>
+                    Автор книги
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (ViewBag.ClientId == 0)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Client.Email)
+                        </td>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ebook.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ebook.Author.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            @if (ViewBag.ClientId != 0)
+            {
+                <td>
+                    <form method="get" asp-controller="Clients" asp-action="Index">
+                        <input type="submit" class="btn btn-primary" value="Список клієнтів" />
+                    </form>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            }
+
+        </tr>
+    </table>
+
+
+
+    <form method="get" asp-controller="Home" asp-action="Index">
+        <input type="submit" class="btn btn-primary" value="На головну" />
+    </form>
+
+    @section scripts
+{
+
+        <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                $.get('/api/Charts/JsonData2', function (JsonData2) {
+                    data = google.visualization.arrayToDataTable(JsonData2, false);
+                    var option = {
+                        title: "Співвідношення кількості покупок та клієнтів",
+                        width: 400,
+                        height: 300
+                    };
+                    chart = new google.visualization.PieChart(document.getElementById('chart2'));
+                    chart.draw(data, option);
+                })
+            }
+        </script>
+
+    }

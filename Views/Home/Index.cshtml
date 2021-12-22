@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Головна";
+}
+<br>
+<br>
+<br>
+<br>
+<div class="text-center">
+    <h1 class="display-4">EbookSTR</h1>
+
+    <h2>Книжки на будь-який смак!</h2>
+</div>
+<style>
+    body {
+        background: #c7b39b url(іFiles/background_main.jpg);
+    }
+</style>
+<br>
+<br>
+
+<form method="get" asp-controller="Ebooks" asp-action="Index" asp-route-id="0">
+    <p align="center">
+        <input type="submit" class="btn btn-success btn-lg" style="height:60px;width:250px;font-size:x-large"  value="Розпочнемо!" />
+    </p>
+</form>
+
+
